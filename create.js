@@ -68,6 +68,7 @@ function generateWorkoutPlan() {
 
   const workoutSplits = {
     chest: {
+      chest: "Chest workout",
       shoulders: "Chest and Shoulders Split",
       back: "Chest and Back Split",
       biceps: "Chest and Biceps Split",
@@ -76,6 +77,7 @@ function generateWorkoutPlan() {
       "lower body": "Chest and Lower Body Split",
     },
     shoulders: {
+      shoulders: "Shoulder workout",
       back: "Shoulders and Back Split",
       biceps: "Shoulders and Biceps Split",
       legs: "Shoulders and Legs Split",
@@ -83,12 +85,14 @@ function generateWorkoutPlan() {
       "lower body": "Shoulders and Lower Body Split",
     },
     back: {
+      back: "Back workout",
       biceps: "Back and Biceps Split",
       legs: "Back and Legs Split",
       "upper body": "Back and Upper Body Split",
       "lower body": "Back and Lower Body Split",
     },
     biceps: {
+      biceps: "Bicep workout",
       legs: "Biceps and Legs Split",
       "upper body": "Biceps and Upper Body Split",
       "lower body": "Biceps and Lower Body Split",

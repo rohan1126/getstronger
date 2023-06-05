@@ -76,46 +76,63 @@
         </div>
       </div>
     </nav>
-<head>
-    <script type="text/javascript">
+    <head>
+      <script type="text/javascript">
         window.onload = function() {
-            var dps = []; //dataPoints. 
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                title: {
-                    text: "Accepting DataPoints from User Input"
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: dps
-                }]
+          var dps = [];
+    
+          var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+              text: "Bench Progress"
+            },
+            data: [{
+              type: "line",
+              dataPoints: dps
+            }]
+          });
+    
+          function addDataPointsAndRender() {
+            var xValue = new Date(document.getElementById("xValue").value);
+            var yValue = Number(document.getElementById("yValue").value);
+            dps.push({
+              x: xValue,
+              y: yValue
             });
-
-            function addDataPointsAndRender() {
-                xValue = Number(document.getElementById("xValue").value);
-                yValue = Number(document.getElementById("yValue").value);
-                dps.push({
-                    x: xValue,
-                    y: yValue
-                });
-                chart.render();
-            }
-
-            var renderButton = document.getElementById("renderButton");
-            renderButton.addEventListener("click", addDataPointsAndRender);
+            chart.render();
+    
+            // Save data points to local storage
+            localStorage.setItem("dataPoints", JSON.stringify(dps));
+          }
+          function removeLastDataPoint() {
+          dps.pop();
+          chart.render();
         }
-    </script>
-    <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-</head>
-
-<body>
-    X Value:
-    <input id="xValue" type="number" step="any" placeholder="Enter X-Value"> Y Value:
-    <input id="yValue" type="number" step="any" placeholder="Enter Y-Value">
-    <button id="renderButton">Add DataPoint & Render</button>
-    <div id="chartContainer" style="height: 270px; width: 100%;">
-    </div>
+        var removeButton = document.getElementById("removeButton");
+        removeButton.addEventListener("click", removeLastDataPoint);
+          var renderButton = document.getElementById("renderButton");
+          renderButton.addEventListener("click", addDataPointsAndRender);
+    
+          // Load data points from local storage
+          var savedDataPoints = localStorage.getItem("dataPoints");
+          if (savedDataPoints) {
+            dps = JSON.parse(savedDataPoints);
+            chart.options.data[0].dataPoints = dps; // Update the dataPoints property of the chart options
+            chart.render();
+          }
+        };
+      </script>
+      <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+  </head>
+  
+  <body>
+    Date:
+    <input id="xValue" type="date" placeholder="Enter Date"> Weight:
+    <input id="yValue" type="number" step="any" placeholder="Enter Weight">
+    <button id="renderButton">Calculate Bench Progress</button>
+    <button id="removeButton">Remove Last DataPoint</button>
+    <div id="chartContainer" style="height: 270px; width: 100%;"></div>
     <button onclick="history.back()">Go Back</button>
-</body>
+      <button onclick="history.back()">Go Back</button>
   </body>
+  
 </html>
