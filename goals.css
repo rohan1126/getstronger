@@ -1,6 +1,9 @@
 * {
   text-align: center;
+  align-items: center;
+  margin: auto;
 }
+
 h1 {
   font-size: 36px;
   margin-top: 40px;
