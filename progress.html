@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
-    <!-- <link rel="stylesheet" type="text/css" href="goals.css" /> -->
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="goals.html">Goals</a>
@@ -58,8 +57,9 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="progress.html">Progress</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="progress.html">Progress</a>
+              </li>
           </ul>
           <form class="d-flex">
             <input
@@ -75,57 +75,45 @@
         </div>
       </div>
     </nav>
+<head>
+    <script type="text/javascript">
+        window.onload = function() {
+            var dps = []; //dataPoints. 
 
-    <div class="container">
-      <h2>Please enter your Information below</h2>
-      <p>
-        We will use all the information you provide to give you exactly what you
-        need to reach your goals!
-      </p>
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Accepting DataPoints from User Input"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: dps
+                }]
+            });
 
-      <form id="user-info-form">
-        <label for="names">Name:</label>
-        <input type="string" id="names" name="names" required />
-        <br />
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required />
-        <br />
+            function addDataPointsAndRender() {
+                xValue = Number(document.getElementById("xValue").value);
+                yValue = Number(document.getElementById("yValue").value);
+                dps.push({
+                    x: xValue,
+                    y: yValue
+                });
+                chart.render();
+            }
 
-        <label for="height">Height (in inches):</label>
-        <input type="number" id="height" name="height" required />
-        <br />
+            var renderButton = document.getElementById("renderButton");
+            renderButton.addEventListener("click", addDataPointsAndRender);
+        }
+    </script>
+    <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
 
-        <label for="weight">Weight (in lbs):</label>
-        <input type="number" id="weight" name="weight" required />
-        <br />
-        <label for="weightGoal">Goal Weight (in lbs):</label>
-        <input type="number" id="weightGoal" name="weightGoal" required />
-        <br />
-
-        <select name="goals" id="goals">
-          <option value=""></option>
-          <option value="bulk">Bulk</option>
-          <option value="cut">Cut</option>
-          <option value="maintain">Maintain</option>
-        </select>
-
-        <br />
-
-        <input type="submit" id="submit" value="Submit" />
-      </form>
-      <div id="result"></div>
+<body>
+    X Value:
+    <input id="xValue" type="number" step="any" placeholder="Enter X-Value"> Y Value:
+    <input id="yValue" type="number" step="any" placeholder="Enter Y-Value">
+    <button id="renderButton">Add DataPoint & Render</button>
+    <div id="chartContainer" style="height: 270px; width: 100%;">
     </div>
-
-    <div id="container" class="goals-container" style="display: none">
-      <div id="name">Name:</div>
-      <div id="cal">Calories:</div>
-      <div id="bulk">Bulk:</div>
-      <div id="bmi">BMI:</div>
-      <div id="protein">Protein:</div>
-    </div>
-    <!-- Add these script tags before the closing </body> tag -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="script.js"></script>
+</body>
   </body>
 </html>

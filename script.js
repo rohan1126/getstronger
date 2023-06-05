@@ -1,113 +1,162 @@
-const quizContainer = document.querySelector(".quiz-container");
-const questionElement = document.querySelector("#question");
-const optionsElement = document.querySelector("#options");
-const submitButton = document.querySelector("#submit-btn");
-const workoutPlanElement = document.querySelector("#workout-plan");
+// script.js
 
-let currentQuestionIndex = 0;
-let userChoices = [];
+function calculateBMR(Username, age, weight, height, goals) {
+  //66.47 + ( 6.24 × weight in pounds ) + ( 12.7 × height in inches ) − ( 6.755 × age in years )
+  const name = document.getElementById("name");
+  const calcCal = document.getElementById("cal");
+  const bulk = document.getElementById("bulk");
+  const bmi = document.getElementById("bmi");
+  const protein = document.getElementById("protein");
+  let Bmr = Math.round(66.47 + 6.24 * weight + 12.7 * height - 6.755 * age);
+  let Bmi = Math.round((703 * weight) / (height * height));
+  let proteinMin = weight - 25;
+  // let proteinMax = weight + 10;
+  let bulkCal = Bmr + 500;
+  let cutCal = Bmr - 500;
+  let maintainCal = Bmr - 250;
 
-// Define the quiz data (questions and options)
-const quizData = [
-  {
-    question: "How often do you exercise?",
-    options: ["1-2 days per week", "3-4 days per week", "5+ days per week"],
-  },
-  {
-    question: "What is your primary fitness goal?",
-    options: [
-      "Weight loss",
-      "Muscle building",
-      "Improving cardiovascular fitness",
-      "Overall health and well-being",
-    ],
-  },
-  {
-    question: "How much time can you dedicate to workouts per day?",
-    options: [
-      "Less than 30 minutes",
-      "30-45 minutes",
-      "45-60 minutes",
-      "More than 60 minutes",
-    ],
-  },
-  {
-    question: "What kind of equipment do you have?",
-    options: ["Large Gym", "Small Gym", "Body Weight Only"],
-  },
-];
-
-// Display the current question and options
-function displayQuestion() {
-  const currentQuestion = quizData[currentQuestionIndex];
-  questionElement.textContent = currentQuestion.question;
-
-  optionsElement.innerHTML = "";
-  currentQuestion.options.forEach((option) => {
-    const li = document.createElement("li");
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "answer";
-    radio.value = option;
-    li.textContent = option;
-    li.appendChild(radio);
-    optionsElement.appendChild(li);
-  });
-}
-
-// Store the user's choice for each question
-function saveUserChoice() {
-  const selectedOption = document.querySelector('input[name="answer"]:checked');
-  if (selectedOption) {
-    userChoices.push(selectedOption.value);
-  }
-}
-
-// Generate the workout plan based on user's choices
-function generateWorkoutPlan() {
-  const [frequency, goal, time, equipment] = userChoices;
-  let workoutSplit = "";
-
-  if (frequency === "1-2 days per week") {
-    workoutSplit = "Upper/Lower";
-  } else if (frequency === "3-4 days per week") {
-    workoutSplit = "Arnold Split";
-  } else if (frequency === "5+ days per week") {
-    workoutSplit = "Push/Pull/Legs";
-  }
-
-  const workoutPlan = `Workout Split: ${workoutSplit}`;
-
-  workoutPlanElement.textContent = workoutPlan;
-}
-
-// Move to the next question or end the survey
-function nextQuestion() {
-  saveUserChoice();
-
-  currentQuestionIndex++;
-
-  if (currentQuestionIndex < quizData.length) {
-    displayQuestion();
+  name.textContent =
+    "Hello " +
+    Username +
+    " We are so glad you are looking to better yourself! Below is some information that would be useful to reach your goals";
+  bmi.textContent = "Your BMI is: " + Bmi;
+  protein.textContent =
+    "You should be aiming to eat " +
+    proteinMin +
+    " - " +
+    weight +
+    " grams of protein a day";
+  calcCal.textContent =
+    "Your BMR is: " +
+    Bmr +
+    " BMR is the amount of calories you burn by doing nothing";
+  if (goals.includes("bulk") || goals.includes("Bulk")) {
+    bulk.textContent =
+      "To Bulk you should be eating roughly: " + bulkCal + " Calories";
+  } else if (goals.includes("maintain")) {
+    bulk.textContent =
+      "To maintain you should be eating roughly : " + Bmr + " Calories";
   } else {
-    quizContainer.style.display = "none";
-    generateWorkoutPlan();
+    bulk.textContent =
+      "To Cut you should be eating roughly: " + cutCal + " Calories";
   }
 }
 
-// Generate the weekly calendar
+const form = document.getElementById("user-info-form");
+const resultDiv = document.getElementById("result");
+const name = document.getElementById("names");
+const ageInput = document.getElementById("age");
+const weightInput = document.getElementById("weight");
+const weightGoal = document.getElementById("weightGoal");
+const heightInput = document.getElementById("height");
+const goalsInput = document.getElementById("goals");
 
-// Call the generateWeeklyCalendar function after the survey is completed and the workout plan is generated
-submitButton.addEventListener("click", function () {
-  nextQuestion();
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-  if (currentQuestionIndex === quizData.length) {
-    quizContainer.style.display = "none";
-    generateWorkoutPlan();
-    generateWeeklyCalendar(); // Call the function to generate the weekly calendar
-    scoreElement.style.display = "none";
+  const names = name.value.toUpperCase();
+  const age = ageInput.value;
+  const weight = weightInput.value;
+  const height = heightInput.value;
+  const goals = goalsInput.value.toLowerCase();
+  const goalWeight = weightGoal.value;
+
+  // Save input values to local storage
+  localStorage.setItem("name", names);
+  localStorage.setItem("age", age);
+  localStorage.setItem("weight", weight);
+  localStorage.setItem("height", height);
+  localStorage.setItem("goals", goals);
+  localStorage.setItem("goalWeight", goalWeight);
+
+  if (goals.includes("bulk") && weight < goalWeight) {
+    const result = "Based on your input you want to bulk";
+    resultDiv.textContent = result;
+
+    calculateBMR(names, age, weight, height, goals);
+  } else if (goals.includes("cut") && weight > goalWeight) {
+    const result = "Based on your input you want to cut";
+    resultDiv.textContent = result;
+    calculateBMR(names, age, weight, height, goals);
+  } else if (goals.includes("maintain") && weight === goalWeight) {
+    const result = "Based on your input you want to maintain your weight";
+    resultDiv.textContent = result;
+    calculateBMR(names, age, weight, height, goals);
+  } else {
+    const result =
+      "Please check to see if your goals have been entered properly";
+    resultDiv.textContent = result;
   }
 });
 
-// Start the survey
-displayQuestion();
+// Retrieve input values from local storage when the page loads
+window.addEventListener("load", function () {
+  const savedName = localStorage.getItem("name");
+  const savedAge = localStorage.getItem("age");
+  const savedWeight = localStorage.getItem("weight");
+  const savedHeight = localStorage.getItem("height");
+  const savedGoals = localStorage.getItem("goals");
+  const savedGoalWeight = localStorage.getItem("goalWeight");
+
+  if (savedName) {
+    name.value = savedName;
+  }
+  if (savedAge) {
+    ageInput.value = savedAge;
+  }
+  if (savedWeight) {
+    weightInput.value = savedWeight;
+  }
+  if (savedHeight) {
+    heightInput.value = savedHeight;
+  }
+  if (savedGoals) {
+    goalsInput.value = savedGoals;
+  }
+  if (savedGoalWeight) {
+    weightGoal.value = savedGoalWeight;
+  }
+});
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const ageInput = document.getElementById("age");
+  const weightInput = document.getElementById("weight");
+  const weightGoal = document.getElementById("weightGoal");
+  const heightInput = document.getElementById("height");
+  const goalsInput = document.getElementById("goals");
+  const name = document.getElementById("names");
+  const names = name.value.toUpperCase();
+  const age = ageInput.value;
+  const weight = weightInput.value;
+  const height = heightInput.value;
+  const goals = goalsInput.value.toLowerCase();
+  const goalWeight = weightGoal.value;
+
+  if (goals.includes("bulk") && weight < goalWeight) {
+    const result = "Based on your input you want to bulk";
+    resultDiv.textContent = result;
+
+    calculateBMR(names, age, weight, height, goals);
+  } else if (goals.includes("cut") && weight > goalWeight) {
+    const result = "Based on your input you want to cut";
+    resultDiv.textContent = result;
+    calculateBMR(names, age, weight, height, goals);
+  } else if (goals.includes("maintain") && weight === goalWeight) {
+    const result = "Based on your input you want to maintain your weight";
+    resultDiv.textContent = result;
+    calculateBMR(names, age, weight, height, goals);
+  } else {
+    const result =
+      "Please check to see if your goals have been entered properly";
+    resultDiv.textContent = result;
+  }
+});
+
+const showContainerButton = document.getElementById("submit");
+const container = document.getElementById("container");
+
+showContainerButton.addEventListener("click", () => {
+  container.style.display = "flex";
+});

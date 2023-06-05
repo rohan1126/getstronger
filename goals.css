@@ -1,0 +1,204 @@
+* {
+  text-align: center;
+}
+h1 {
+  font-size: 36px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 20px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  text-align: center;
+}
+body {
+  background-color: #f5f5f5;
+  color: #444;
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+form {
+  background-color: transparent;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+select {
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 50px;
+  border: 2px solid #333;
+  background-color: transparent;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: all 0.3s ease-in-out;
+}
+
+select:hover,
+select:focus {
+  outline: none;
+  border: 2px solid #4caf50;
+  background-color: #f2f2f2;
+}
+
+select option {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  background-color: #fff;
+}
+
+#result {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  /* Other mobile styles */
+
+  header {
+    display: block;
+  }
+}
+
+form {
+  background-color: transparent;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="number"],
+input[type="string"],
+textarea {
+  width: 50%;
+  padding: 5px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+}
+
+input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+#result {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#bulk,
+#bmi,
+#protein {
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 5x;
+  width: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#cal,
+#bulk {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  #cal,
+  #bulk,
+  #bmi,
+  #protein {
+    width: 100%;
+  }
+}
+
+/* .goals-container {
+  display: none;
+  border: 1px solid #ccc;
+  padding: 10px;
+} */
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#name {
+  margin: 0 auto 20px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: lighter;
+}
+
+#cal,
+#bulk,
+#bmi,
+#protein {
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: lighter;
+  background-color: #fcf6f5ff;
+  align-self: flex-start;
+}
+
+.goals-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+select {
+  width: 50%;
+}
+
+.logo a {
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  text-decoration: none;
+}
