@@ -2,72 +2,11 @@
 <html>
   <head>
     <title>Workout Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="log.css" />
   </head>
   <body>
-    <style>
-      .workout-container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      h3 {
-        text-align: center;
-      }
-
-      input[type="text"] {
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 10px;
-      }
-
-      button {
-        padding: 8px 16px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-
-      li {
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #f9f9f9;
-        padding: 10px;
-      }
-
-      li button {
-        background-color: #dc3545;
-      }
-
-      li button:hover {
-        background-color: #c82333;
-      }
-
-      @media (max-width: 480px) {
-        .workout-container {
-          max-width: 300px;
-          padding: 10px;
-        }
-
-        input[type="text"] {
-          font-size: 14px;
-        }
-
-        button {
-          font-size: 14px;
-        }
-      }
-    </style>
     <h1>Workout Tracker</h1>
-
     <div class="workout-container">
       <h3>Workout List</h3>
       <div>
@@ -75,12 +14,10 @@
         <input type="number" id="sets-input" placeholder="Sets" />
         <input type="number" id="reps-input" placeholder="Reps" />
         <input type="number" id="weight-input" placeholder="Weight" required />
-
         <button id="add-workout-btn">Add Workout</button>
       </div>
       <ul id="workout-list"></ul>
     </div>
-
     <a href="index.html">Go home</a>
     <script src="workout.js"></script>
   </body>

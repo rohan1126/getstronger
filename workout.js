@@ -15,6 +15,7 @@ function saveWorkouts() {
 }
 
 // Function to create a new workout item
+// Function to create a new workout item
 function createWorkoutItem() {
   const workout = workoutInput.value.trim();
   const sets = setsInput.value;
@@ -37,11 +38,13 @@ function createWorkoutItem() {
 
   const listItem = document.createElement("li");
   listItem.innerHTML = `
-    <span>${workout}</span>
-    <span>Sets: ${sets}</span>
-    <span>Reps: ${reps}</span>
-    <span>Weight: ${weight}</span>
-    <button class="remove-btn">Remove</button>
+    <div class="workout-info">
+      <span>${workout}</span>
+      <span>Sets: ${sets}</span>
+      <span>Reps: ${reps}</span>
+      <span>Weight: ${weight}</span>
+    </div>
+    <button class="remove-btn">X</button>
   `;
   workoutList.appendChild(listItem);
 
@@ -72,7 +75,7 @@ function displaySavedWorkouts() {
       <span>Sets: ${workoutItem.sets}</span>
       <span>Reps: ${workoutItem.reps}</span>
       <span>Weight: ${workoutItem.weight}</span>
-      <button class="remove-btn">Remove</button>
+      <button class="remove-btn">X</button>
     `;
     workoutList.appendChild(listItem);
   }
