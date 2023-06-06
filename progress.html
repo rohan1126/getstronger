@@ -1,20 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Weight Progress Tracker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Strength Building</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        margin: auto;
+        text-align: center;
+      }
+
+      input[type="date"],
+      input[type="number"] {
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        display: block;
+        margin: 0 auto; /* Center horizontally */
+        width: 50%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 12px;
+      }
+
+      button:hover {
+        background-color: #3e8e41;
+      }
+
+      button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+
+      canvas {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+      }
+      .clear-chart-button {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        width: 25%;
+        bottom: 10px;
+        left: 10px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-
         <button
           class="navbar-toggler"
           type="button"
@@ -30,7 +89,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="goals.html">Goals</a>
@@ -49,18 +110,20 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Push Pull Leg</a></li>
                 <li><a class="dropdown-item" href="#">Arnold Split</a></li>
-                
                 <li>
                   <a class="dropdown-item" href="#">Upper Lower</a>
-                  <li><hr class="dropdown-divider" /></li>
-                  <a class="dropdown-item" href="create.html">Create Your Own</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="create.html"
+                    >Create Your Own</a
+                  >
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <li class="nav-item">
-                <a class="nav-link" href="progress.html">Progress</a>
-              </li>
+              <a class="nav-link" href="progress.html">Progress</a>
+            </li>
           </ul>
           <form class="d-flex">
             <input
@@ -76,63 +139,38 @@
         </div>
       </div>
     </nav>
-    <head>
-      <script type="text/javascript">
-        window.onload = function() {
-          var dps = [];
-    
-          var chart = new CanvasJS.Chart("chartContainer", {
-            title: {
-              text: "Bench Progress"
-            },
-            data: [{
-              type: "line",
-              dataPoints: dps
-            }]
-          });
-    
-          function addDataPointsAndRender() {
-            var xValue = new Date(document.getElementById("xValue").value);
-            var yValue = Number(document.getElementById("yValue").value);
-            dps.push({
-              x: xValue,
-              y: yValue
-            });
-            chart.render();
-    
-            // Save data points to local storage
-            localStorage.setItem("dataPoints", JSON.stringify(dps));
-          }
-          function removeLastDataPoint() {
-          dps.pop();
-          chart.render();
-        }
-        var removeButton = document.getElementById("removeButton");
-        removeButton.addEventListener("click", removeLastDataPoint);
-          var renderButton = document.getElementById("renderButton");
-          renderButton.addEventListener("click", addDataPointsAndRender);
-    
-          // Load data points from local storage
-          var savedDataPoints = localStorage.getItem("dataPoints");
-          if (savedDataPoints) {
-            dps = JSON.parse(savedDataPoints);
-            chart.options.data[0].dataPoints = dps; // Update the dataPoints property of the chart options
-            chart.render();
-          }
-        };
-      </script>
-      <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-  </head>
-  
-  <body>
-    Date:
-    <input id="xValue" type="date" placeholder="Enter Date"> Weight:
-    <input id="yValue" type="number" step="any" placeholder="Enter Weight">
-    <button id="renderButton">Calculate Bench Progress</button>
-    <button id="removeButton">Remove Last DataPoint</button>
-    <div id="chartContainer" style="height: 270px; width: 100%;"></div>
-    <button onclick="history.back()">Go Back</button>
-      <button onclick="history.back()">Go Back</button>
+    <h1>Weight Progress Tracker</h1>
+
+    <div>
+      <label for="date">Date:</label>
+      <input type="date" id="date" />
+      <label for="weight">Bench Weight:</label>
+      <input type="number" id="weight" />
+      <button onclick="addData('weight')">Enter</button>
+    </div>
+
+    <div>
+      <label for="squat-date">Date:</label>
+      <input type="date" id="squat-date" />
+      <label for="squat-weight">Squat Weight:</label>
+      <input type="number" id="squat-weight" />
+      <button onclick="addData('squat')">Enter</button>
+    </div>
+    <div>
+      <label for="dead-date">Date:</label>
+      <input type="date" id="dead-date" />
+      <label for="dead-weight">Deadlift Weight:</label>
+      <input type="number" id="dead-weight" />
+      <button onclick="addData('dead')">Enter</button>
+    </div>
+
+    <canvas id="chart"></canvas>
+    <button class="clear-chart-button" onclick="clearChart()">
+      Clear Chart
+    </button>
+    <button onclick="undoData()">Undo</button>
+
+    <script src="progress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
-  
 </html>
