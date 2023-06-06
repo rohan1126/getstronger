@@ -1,10 +1,8 @@
-// Retrieve data from localStorage
 var storedWeightDates = JSON.parse(localStorage.getItem("weightDates")) || [];
 var storedWeightWeights =
   JSON.parse(localStorage.getItem("weightWeights")) || [];
 var storedSquatDates = JSON.parse(localStorage.getItem("squatDates")) || [];
 var storedSquatWeights = JSON.parse(localStorage.getItem("squatWeights")) || [];
-
 var storedDeadDates = JSON.parse(localStorage.getItem("deadDates")) || [];
 var storedDeadWeights = JSON.parse(localStorage.getItem("deadWeights")) || [];
 
@@ -16,7 +14,6 @@ var squatWeights = storedSquatWeights;
 var deadDates = storedDeadDates;
 var deadWeights = storedDeadWeights;
 var chart;
-
 // Function to add data
 function addData(chartId) {
   var dateInput = document.getElementById("date");
@@ -33,10 +30,21 @@ function addData(chartId) {
   var deadDate = deadDateInput.value;
   var deadWeight = deadWeightInput.value;
 
+  localStorage.setItem("weightDates", JSON.stringify(weightDates));
+  localStorage.setItem("weightWeights", JSON.stringify(weightWeights));
+  localStorage.setItem("squatDates", JSON.stringify(squatDates));
+  localStorage.setItem("squatWeights", JSON.stringify(squatWeights));
+  localStorage.setItem("deadDates", JSON.stringify(deadDates));
+  localStorage.setItem("deadWeights", JSON.stringify(deadWeights));
+
   if (chartId === "weight") {
     // Add weight data to arrays
     weightDates.push(date);
     weightWeights.push(weight);
+
+    // Update max weight for bench press
+    var maxWeight = Math.max(...weightWeights);
+    document.getElementById("maxBench").textContent = maxWeight;
 
     // Save weight data to localStorage
     localStorage.setItem("weightDates", JSON.stringify(weightDates));
@@ -50,6 +58,10 @@ function addData(chartId) {
     squatDates.push(squatDate);
     squatWeights.push(squatWeight);
 
+    // Update max weight for squat
+    var maxWeight = Math.max(...squatWeights);
+    document.getElementById("maxSquat").textContent = maxWeight;
+
     // Save squat data to localStorage
     localStorage.setItem("squatDates", JSON.stringify(squatDates));
     localStorage.setItem("squatWeights", JSON.stringify(squatWeights));
@@ -58,15 +70,19 @@ function addData(chartId) {
     squatDateInput.value = "";
     squatWeightInput.value = "";
   } else if (chartId === "dead") {
-    // Add squat data to arrays
+    // Add deadlift data to arrays
     deadDates.push(deadDate);
     deadWeights.push(deadWeight);
 
-    // Save squat data to localStorage
+    // Update max weight for deadlift
+    var maxWeight = Math.max(...deadWeights);
+    document.getElementById("maxDeadlift").textContent = maxWeight;
+
+    // Save deadlift data to localStorage
     localStorage.setItem("deadDates", JSON.stringify(deadDates));
     localStorage.setItem("deadWeights", JSON.stringify(deadWeights));
 
-    // Clear squat input fields
+    // Clear deadlift input fields
     deadDateInput.value = "";
     deadWeightInput.value = "";
   }
@@ -122,6 +138,7 @@ function updateChart() {
     },
   });
 }
+
 function clearChart() {
   // Clear data arrays
   weightDates = [];
@@ -141,7 +158,11 @@ function clearChart() {
 
   // Update the chart
   updateChart();
+  document.getElementById("maxBench").textContent = "N/A";
+  document.getElementById("maxSquat").textContent = "N/A";
+  document.getElementById("maxDeadlift").textContent = "N/A";
 }
+
 function undoData() {
   // Check which chart is currently active
   var activeChartId = chart.config.data.datasets[0].label;
@@ -151,6 +172,10 @@ function undoData() {
     weightDates.pop();
     weightWeights.pop();
 
+    // Update max weight for bench press
+    var maxWeight = Math.max(...weightWeights);
+    document.getElementById("maxBench").textContent = maxWeight;
+
     // Update localStorage
     localStorage.setItem("weightDates", JSON.stringify(weightDates));
     localStorage.setItem("weightWeights", JSON.stringify(weightWeights));
@@ -158,6 +183,10 @@ function undoData() {
     // Remove the last squat data point
     squatDates.pop();
     squatWeights.pop();
+
+    // Update max weight for squat
+    var maxWeight = Math.max(...squatWeights);
+    document.getElementById("maxSquat").textContent = maxWeight;
 
     // Update localStorage
     localStorage.setItem("squatDates", JSON.stringify(squatDates));
@@ -167,6 +196,10 @@ function undoData() {
     deadDates.pop();
     deadWeights.pop();
 
+    // Update max weight for deadlift
+    var maxWeight = Math.max(...deadWeights);
+    document.getElementById("maxDeadlift").textContent = maxWeight;
+
     // Update localStorage
     localStorage.setItem("deadDates", JSON.stringify(deadDates));
     localStorage.setItem("deadWeights", JSON.stringify(deadWeights));
@@ -175,6 +208,21 @@ function undoData() {
   // Update the chart
   updateChart();
 }
+function initializePage() {
+  // Retrieve max weights from localStorage
+  var maxBench = Math.max(...weightWeights);
+  var maxSquat = Math.max(...squatWeights);
+  var maxDeadlift = Math.max(...deadWeights);
+
+  // Display max weights
+  document.getElementById("maxBench").textContent = maxBench || "N/A";
+  document.getElementById("maxSquat").textContent = maxSquat || "N/A";
+  document.getElementById("maxDeadlift").textContent = maxDeadlift || "N/A";
+
+  // Update the chart
+  updateChart();
+}
 
 // Initial chart setup
 updateChart();
+initializePage();
