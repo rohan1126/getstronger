@@ -43,6 +43,46 @@
         width: 100px; /* Set the desired width */
         height: auto; /* Maintain aspect ratio */
       }
+
+      ol {
+        list-style-type: none;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      ul {
+        list-style-type: none;
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      /* CSS Styles for the Workout Results */
+      .workout-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .workout-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .workout-link {
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      .workout-name {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .workout-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
     </style>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
@@ -118,6 +158,23 @@
       <input type="checkbox" name="workout" value="upper legs" />legs<br />
       <input type="checkbox" name="workout" value="back" />back<br />
       <input type="checkbox" name="workout" value="upper arms" />arms<br />
+      <div id="equipmentContainer">
+        <h3>Select equipment:</h3>
+        <label>
+          <input type="radio" name="equipment" value="barbell" required />
+          Barbell
+        </label>
+        <label>
+          <input type="radio" name="equipment" value="dumbbell" required />
+          Dumbbell
+        </label>
+        <label>
+          <input type="radio" name="equipment" value="cable" required />
+          Cable
+        </label>
+        <!-- Add more radio buttons for additional equipment options -->
+      </div>
+
       <button type="submit">Submit</button>
     </form>
 

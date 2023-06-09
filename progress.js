@@ -16,6 +16,7 @@ var deadWeights = storedDeadWeights;
 var chart;
 // Function to add data
 function addData(chartId) {
+  let today = new Date().toISOString().slice(0, 10);
   var dateInput = document.getElementById("date");
   var weightInput = document.getElementById("weight");
   var squatDateInput = document.getElementById("squat-date");
@@ -23,11 +24,11 @@ function addData(chartId) {
   var deadDateInput = document.getElementById("dead-date");
   var deadWeightInput = document.getElementById("dead-weight");
 
-  var date = dateInput.value;
+  var date = today;
   var weight = weightInput.value;
-  var squatDate = squatDateInput.value;
+  var squatDate = today;
   var squatWeight = squatWeightInput.value;
-  var deadDate = deadDateInput.value;
+  var deadDate = today;
   var deadWeight = deadWeightInput.value;
 
   localStorage.setItem("weightDates", JSON.stringify(weightDates));
@@ -51,8 +52,8 @@ function addData(chartId) {
     localStorage.setItem("weightWeights", JSON.stringify(weightWeights));
 
     // Clear weight input fields
-    dateInput.value = "";
-    weightInput.value = "";
+    // dateInput.value = "";
+    // weightInput.value = "";
   } else if (chartId === "squat") {
     // Add squat data to arrays
     squatDates.push(squatDate);
@@ -67,7 +68,7 @@ function addData(chartId) {
     localStorage.setItem("squatWeights", JSON.stringify(squatWeights));
 
     // Clear squat input fields
-    squatDateInput.value = "";
+    // squatDateInput.value = "";
     squatWeightInput.value = "";
   } else if (chartId === "dead") {
     // Add deadlift data to arrays
@@ -93,6 +94,7 @@ function addData(chartId) {
 
 // Function to update the chart
 function updateChart() {
+  let today = new Date().toISOString().slice(0, 10);
   var ctx = document.getElementById("chart").getContext("2d");
 
   // Destroy the previous chart instance
@@ -104,7 +106,7 @@ function updateChart() {
   chart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: weightDates.concat(squatDates),
+      labels: weightDates.concat(today),
       datasets: [
         {
           label: "Weight Progress",
